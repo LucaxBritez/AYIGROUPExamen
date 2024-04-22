@@ -64,15 +64,22 @@ public class Pedido {
 
 
     public void imprimirPedido(Pedido pedido) {
+        System.out.println("--------------------");
         System.out.println("Numero de orden: " + getNumeroDeOrden());
-        System.out.println("Pedidos: ");
-        for (Producto producto : pedido.productos) {
-            System.out.println("Nombre producto: " + producto.getNombreProducto());
-            System.out.println("Precio producto: " + producto.getPrecioProducto());
-            System.out.println("Cantidad producto: " + producto.getCantidadProducto());
-        }
+        System.out.println("Pedido: ");
+        System.out.println(pedido.productos);
+
+
         System.out.println("Estado del pedido: " + pedido.estado);
         System.out.println("Tipo de pedido: " + pedido.tipo);
-    }
+        System.out.println("--------------------");
 
+//        for (Producto producto : pedido.productos) {
+//
+//            System.out.println("Nombre producto: " + producto.getNombreProducto());
+//            System.out.println("Precio producto: " + producto.getPrecioProducto());
+//            System.out.println("Cantidad producto: " + producto.getCantidadProducto());
+//        }
+
+    }
 }

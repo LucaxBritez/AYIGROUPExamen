@@ -4,7 +4,6 @@ public class Producto {
 
     String nombreProducto;
     double precioProducto;
-    int unidades;
     int cantidadProducto;
 
     public Producto(String nombreProducto, double precioProducto, int cantidadProducto) {
@@ -45,9 +44,5 @@ public class Producto {
 
     public void imprimirProducto(String numero,Producto producto) {
         System.out.println(numero + "| " + "Nombre:" + producto.nombreProducto + " | " +"Precio:" + producto.precioProducto + " | " + "Cantidad:" + producto.cantidadProducto + " |");
-    }
-
-    public void sumarProductos(Producto producto){
-
     }
 }

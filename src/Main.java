@@ -1,5 +1,6 @@
 import Entidades.*;
 
+import javax.swing.plaf.synth.Region;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -59,21 +60,129 @@ public class Main {
 
         /*Condicional encargado de determinar el rol del usuario*/
         if (usuario.getDni() == usuarioResponsable.getDni()) {
-            //Asigno los datos del usuarioResponsable al usuario que esta ingresando.
+
+            //region Contenido del condicional donde se ejecuta el Responsable
+            //region Asigno los datos del usuarioResponsable al usuario que esta ingresando.
             usuario.setNombre(usuarioResponsable.getNombre());
             usuario.setApellido(usuarioResponsable.getApellido());
             usuario.setRol(usuarioResponsable.getRol());
 
             System.out.println("¡Bienvenido " + usuario.getNombre() + "!");
 
-            //Comienza la ejecucion de las aprobaciones de los pedidos(Considerar usar un excel para tener pedidos que validar)
+            //endregion
+
+            //region Creacion de 3 listas de productos para pedidos.
+            List<Producto> productosSeleccionados1 = new ArrayList<>();
+            productosSeleccionados1.add(producto1);
+
+            List<Producto> productosSeleccionados2 = new ArrayList<>();
+            productosSeleccionados2.add(producto2);
+
+            List<Producto> productosSeleccionados3 = new ArrayList<>();
+            productosSeleccionados3.add(producto3);
+            //endregion
+
+            //region Se hardcodean 3 pedidos en estado pendiente para ser utilizados como ejemplo
+
+            Pedido pedido1 = new Pedido(1, usuarioResponsable, productosSeleccionados1, Estado.PENDIENTE, TipoPedido.MAYORISTA );
+            Pedido pedido2 = new Pedido(2, usuarioResponsable, productosSeleccionados2, Estado.PENDIENTE, TipoPedido.MINORISTA );
+            Pedido pedido3 = new Pedido(3, usuarioResponsable, productosSeleccionados3, Estado.PENDIENTE, TipoPedido.MAYORISTA );
+
+            //endregion
+            //region Mostrar lista de pedido pendientes
+            System.out.println("Tienes los siguientes pedidos para aprobar: ");
+
+            System.out.println("Pedido numero: " + pedido1.getNumeroDeOrden());
+            for (Producto producto : pedido1.getProductos()) {
+                System.out.println("Producto: " + producto.getNombreProducto() + ", Precio: $" + producto.getPrecioProducto());
+            }
+
+            System.out.println("Pedido numero: " + pedido2.getNumeroDeOrden());
+            for (Producto producto : pedido2.getProductos()) {
+                System.out.println("Producto: " + producto.getNombreProducto() + ", Precio: $" + producto.getPrecioProducto());
+            }
+
+            System.out.println("Pedido numero: " + pedido3.getNumeroDeOrden());
+            for (Producto producto : pedido3.getProductos()) {
+                System.out.println("Producto: " + producto.getNombreProducto() + ", Precio: $" + producto.getPrecioProducto());
+            }
+            //Agregar funcion que muestre los pedidos
+
+            //endregion
+
+            //region Hacer que el usuario seleccione un pedido
+            char deseaAgregar;
+            int aprobar;
+            //Bucle Do While para evaluar pedidos
+            do {
+                System.out.print("\nIngrese el número del pedido que desea evaluar (1-3): ");
+                int opcion = scanner.nextInt();
+
+                // Agregar el producto seleccionado a la lista de productos seleccionados
+                switch (opcion) {
+                    case 1:
+                        System.out.println("¿Desea aprobar el pedido numero " + opcion + "?");
+                        System.out.println("1-Si");
+                        System.out.println("2-No");
+                        aprobar = scanner.nextInt();;
+
+                        if(aprobar == 1){
+                            pedido1.setEstado(Estado.APROBADO);
+                        }else if(aprobar == 2){
+                            pedido1.setEstado(Estado.DESAPROBADO);
+                        }
+                        break;
+                    case 2:
+                        System.out.println("¿Desea aprobar el pedido numero " + opcion + "?");
+                        System.out.println("1-Si");
+                        System.out.println("2-No");
+                        aprobar = scanner.nextInt();;
+
+                        if(aprobar == 1){
+                            pedido2.setEstado(Estado.APROBADO);
+                        }else if(aprobar == 2){
+                            pedido2.setEstado(Estado.DESAPROBADO);
+                        }
+                        break;
+                    case 3:
+                        System.out.println("¿Desea aprobar el pedido numero " + opcion + "?");
+                        System.out.println("1-Si");
+                        System.out.println("2-No");
+                        aprobar = scanner.nextInt();;
+
+                        if(aprobar == 1){
+                            pedido3.setEstado(Estado.APROBADO);
+                        }else if(aprobar == 2){
+                            pedido3.setEstado(Estado.DESAPROBADO);
+                        }
+
+                        break;
+                    default:
+                        System.out.println("Opción inválida. Intente de nuevo.");
+                        break;
+                }
+
+                // Preguntar al usuario si desea evaluar otro pedido
+                System.out.print("¿Desea revisar otro pedido? (s/n): ");
+                deseaAgregar = scanner.next().charAt(0);
+
+                scanner.nextLine(); // Limpiar el buffer de entrada
+
+            } while (deseaAgregar == 's' || deseaAgregar == 'S');
+
+
+            //endregion
+
+
+
+
+            //endregion
         } else {
-
-
-            /*Como no estamos trabajando con una base de datos que pueda validar si el cliente existe o no, asumimos
+                /*Como no estamos trabajando con una base de datos que pueda validar si el cliente existe o no, asumimos
               que es un cliente por la misma razon y le pedimos los datos como si fuese un cliente nuevo para asignarlos
               al objeto usuario previamente creado.*/
 
+            //region Contenido del condicional donde se ejecuta el usuario Cliente
 
             //region Creacion del usuario cliente
 
@@ -90,8 +199,6 @@ public class Main {
             //Se asigna el rol del usuario
             usuario.setRol(RolUsuario.CLIENTE);
             //endregion
-
-            //region Comienza la creacion del pedido
 
             /*List que almacena temporalmente los productos seleccionados*/
             List<Producto> productosSeleccionados = new ArrayList<>();
@@ -126,7 +233,7 @@ public class Main {
             System.out.println("---------------------------------");
             //endregion
 
-
+            //region Seleccion de productos para el pedido
             char deseaAgregar;
 
             //Bucle Do While para ejecutar la seleccion de productos para el pedido
@@ -159,12 +266,14 @@ public class Main {
                 scanner.nextLine(); // Limpiar el buffer de entrada
 
             } while (deseaAgregar == 's' || deseaAgregar == 'S');
+            //endregion
 
 
             /*El pedido fue confirmado, por lo tanto quedara al pendiente de un responable para su aprobacion o rechazo*/
             pedido.setEstado(Estado.PENDIENTE);
             System.out.println("Su pedido esta en estado " + pedido.getEstado());
 
+            //Se asignan los atributos faltantes al pedido
             //El numero de orden esta hardcodeado
             pedido.setNumeroDeOrden(1);
             pedido.setUsuario(usuario);
@@ -173,6 +282,7 @@ public class Main {
             /*Para este punto se asignaron todos los atributos necesarios para un pedido y su estado es Pendiente*/
 
             pedido.imprimirPedido(pedido);
+
             //endregion
 
 
